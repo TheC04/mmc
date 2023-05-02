@@ -36,6 +36,7 @@
                         $response = $connection->query($sql);
                         if ($response->num_rows > 0) {
                             $data = $response->fetch_array();
+                            $_session['id']=$data['id'];
                             $_SESSION['nome']=$data['nome'];
                             $_SESSION['cognome']=$data['cognome'];
                             $_SESSION['user']=$data['nomeutente'];
