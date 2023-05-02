@@ -1,0 +1,64 @@
+.input{
+    width: 90%;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.cBox{
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.form{
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.submit{
+    width: auto;
+    height: 40px;
+    border: 0;
+    border-radius: 5px;
+    background-color: #35af45;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+button{
+    width: 20%;
+    height: 40px;
+    border: 0;
+    border-radius: 5px;
+    background-color: #35af45;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+h1{
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+p{
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+h4{
+    margin-bottom: 10px;
+    font-size: 20px;
+}

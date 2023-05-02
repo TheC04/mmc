@@ -10,7 +10,6 @@ function calc(){
     var iSoll=pe/(ai*dv*dO*da*pc*fr_dr*sm);
     alert(ai*dv*dO*da*pc*fr_dr*sm);
 }
-
 function getAI(){
     var ai = document.getElementById("ai").value;
     if(ai>25){
@@ -165,4 +164,8 @@ function getSM(){
         sm=1;
     }
     return sm;
+}
+
+function esci(){
+    window.location.href = "./../homepage/homepage.php";
 }

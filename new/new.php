@@ -7,42 +7,43 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Valutazione</title>
     <meta charset="utf-8">
-    <!--<link rel="stylesheet" href="./new.css">-->
+    <link rel="stylesheet" href="./new.css">
     <script src="./new.js"></script>
   </head>
 	<body>
-    <form method="POST">
-      <h4>Ragione sociale</h4>
-      <input id="rs" type="text" required>
+    <h1>Nuovo documento</h1>
+    <form method="POST" class="form">
+      <h4 style="margin-top: 2px;">Ragione sociale</h4>
+      <input id="rs" type="text" required class="input">
       <h4>Costo</h4>
-      <input id="cs" type="number" min=1 required>
+      <input id="cs" type="number" min=1 required class="input">
       <h4>Peso effettivo(kg)</h4>
-      <input id="pe" type="number" min=3 max=25 required>
+      <input id="pe" type="number" min=3 max=25 required class="input">
       <h4>Altezza iniziale(cm)</h4>
-      <input id="ai" type="number" min=0 required>
+      <input id="ai" type="number" min=0 required class="input">
       <h4>Distanza verticale(cm)</h4>
-      <input id="dv" type="number" min=25 required>
-      <h4>Distanza orizzontale(cm)</h4>
-      <input id="do" type="number" min=0 required>
+      <input id="dv" type="number" min=25 required class="input">
+      <h4>Distanza orizzontale <p>(tra il baricentro del lavoratore<br> e il peso, espresso in cm)</p></h4>
+      <input id="do" type="number" min=0 required class="input">
       <h4>Dislocazione angolare(°)</h4>
-      <input id="da" type="number" min=0 required>
+      <input id="da" type="number" min=0 required class="input">
       <h4>Presa sul carico</h4>
-      <input id="pc" list="psc" required>
+      <input id="pc" list="psc" required class="input">
         <datalist id="psc">
       	  <option id="b" value="Buona">
           <option id="s" value="Scarsa">
         </datalist>
       <h4>Frequenza(numero di volte al minuto)</h4>
-      <input id="fr" type="number" min=0,20 required>
+      <input id="fr" type="number" min=0,20 required class="input">
       <h4>Durata(ore continue)</h4>
-      <input id="dr" type="number" min=0,1 max=8 required>
+      <input id="dr" type="number" min=0,1 max=8 required class="input">
       <h4>Una sola mano</h4>
-      <input id="sm" type="checkbox">
+      <input id="sm" type="checkbox" class="cBox">
       <h4>IS:</h4>
       <h4 id="iSoll"></h4>
-      <input id="send" type="submit" id="sub" value="Crea Documento" onclick="calc()">
+      <input id="send" type="submit" id="sub" value="Crea Documento" onclick="calc()" class="submit">
+      <button onclick="esci()">Indietro</button>
     </form>
     <?php
     //peso limite raccomandato sempre maggiore di 0
