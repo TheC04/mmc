@@ -6,6 +6,12 @@
 ?>
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>Valutazione</title>
+    <meta charset="utf-8">
+    <!--<link rel="stylesheet" href="./new.css">-->
+    <script src="./new.js"></script>
+  </head>
 	<body>
     <form method="POST">
       <h4>Ragione sociale</h4>
@@ -29,14 +35,14 @@
           <option id="s" value="Scarsa">
         </datalist>
       <h4>Frequenza(numero di volte al minuto)</h4>
-      <input id="fr" type="number" required>
+      <input id="fr" type="number" min=0,20 required>
       <h4>Durata(ore continue)</h4>
-      <input id="dr" type="number" min=0 max=8 required>
+      <input id="dr" type="number" min=0,1 max=8 required>
       <h4>Una sola mano</h4>
       <input id="sm" type="checkbox">
       <h4>IS:</h4>
       <h4 id="iSoll"></h4>
-      <input id="send" type="submit" id="sub" value="Crea Documento">
+      <input id="send" type="submit" id="sub" value="Crea Documento" onclick="calc()">
     </form>
     <?php
     //peso limite raccomandato sempre maggiore di 0
