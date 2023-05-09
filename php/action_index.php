@@ -15,13 +15,12 @@
       }else{
         $sm=false;
       }
-      require('./../php/getValue.php');
+      require('./getValue.php');
       if(getAI($ai)!=0&&getDV($dv)!=0&&getDO($do)!=0&&getDA($da)!=0&&getPC($pc)!=0&&getFD($fr, $dr)!=0&&getSM($sm)!=0){
-        echo getAI($ai), getDV($dv), getDO($do), getDA($da), getPC($pc), getFD($fr, $dr), getSM($sm);
         $iS=$pe/(getAI($ai)*getDV($dv)*getDO($do)*getDA($da)*getPC($pc)*getFD($fr, $dr)*getSM($sm));
-        echo $iS;
+        echo "<h1 style=\"margin-bottom:10px;\">Indice di sollevamento: ".$iS."<br>Peso limite raccomandato: ".getAI($ai)*getDV($dv)*getDO($do)*getDA($da)*getPC($pc)*getFD($fr, $dr)*getSM($sm)."</h1><button onclick='esci()' style=\"width: 20%;height: 40px;border: 0;border-radius: 5px;background-color: #35af45;color: #fff;font-size: 16px;cursor: pointer;margin-bottom: 10px;\">Indietro</button><script>function esci(){ window.location.href=\"./../new/new.php\";}</script>";
       }else{
-        echo "<h1>C'è un errore nei valori inseriti</h1><button onclick='esci()'>Indietro</button><script>function esci(){ window.location.href=\"./../new/new.php\";}</script>";
+        echo "<h1>C'è un errore nei valori inseriti</h1><button onclick='esci()' style=\"width: 20%;height: 40px;border: 0;border-radius: 5px;background-color: #35af45;color: #fff;font-size: 16px;cursor: pointer;margin-bottom: 10px;\">Indietro</button><script>function esci(){ window.location.href=\"./../new/new.php\";}</script>";
       }
       /*require('./../pdfclass/fpdf.php');
       $pdf = new FPDF();

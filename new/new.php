@@ -25,7 +25,7 @@
       <h4>Distanza verticale(cm)</h4>
       <input name="dv" type="number" min=25 required class="input">
       <h4>Distanza orizzontale <p>(tra il baricentro del lavoratore<br> e il peso, espresso in cm)</p></h4>
-      <input name="do" type="number" min=0 required class="input">
+      <input name="do" type="number" min=25 required class="input">
       <h4>Dislocazione angolare(°)</h4>
       <input name="da" type="number" min=0 required class="input" step="0,1">
       <h4>Presa sul carico</h4>
