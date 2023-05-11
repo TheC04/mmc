@@ -41,6 +41,15 @@ button {
     border-radius: 12%;
 }
 
+/*table.button{
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 16px;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}*/
+
 .user{
     padding-top: 5px;
     padding-left: 5px;

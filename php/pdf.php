@@ -1,8 +1,9 @@
 <?php
     session_start();
+    echo createpdf();
 
-    function createpdf($rs, $pe, $ai ,$dv, $do, $da, $pc, $fr, $dr, $sm){
-        require('../fpdf185/fpdf.php');
+    function createpdf(/*$rs, $pe, $ai ,$dv, $do, $da, $pc, $fr, $dr, $sm*/){
+        require('./../pdfclass/fpdf.php');
         $user_fullname = $_SESSION["nome"] . ' ' . $_SESSION['cognome'];
         $pdf = new FPDF();
         $pdf->SetTitle('PDF');
@@ -16,15 +17,15 @@
         $pdf->Ln();
 
         $pdf->Cell(40,10,'Redatto da:',0,0);
-        $pdf->Cell(40, 10, $user_fullname, 0, 0);
+        $pdf->Cell(40, 10, "nome cognome"/*$user_fullname*/, 0, 0);
 
         $pdf->Ln();
         $pdf->Cell(40,10,'Ragione sociale:',0,0);
-        $pdf->Cell(40,10,$rs,0,0);
+        $pdf->Cell(40,10,"ragione sociale"/*$rs*/,0,0);
 
         $pdf->Ln();
         $pdf->Cell(40,10,'Data:',0,0);
-        $pdf->Cell(40,10,time(),0,0);
+        $pdf->Cell(40,10,"gg/mm/yyyy"/*time()*/,0,0);
 
         $pdf->Ln(15);
         $pdf->SetFont('Arial', 'B', 12);
@@ -33,19 +34,19 @@
         $pdf->SetFont('Arial','B',12,);
 
         $descrizioni = array(
-            'Peso effettivo: '.$row['peso'].' Kg',
-            'Altezza iniziale: '.$row['altezza_iniziale'].' cm',
-            'Distanza verticale: '.$row['distanza_verticale'].' cm',
-            'Distanza orizzontale: '.$row['distanza_orizzontale'].' cm',
-            'Dislocazione angolare: '.$row['distanza_angolare'],
-            'Presa: '.$row['presa'],
-            'Frequenza '.$row['frequenza'].' (al minuto)',
-            'Tempo: '.$row['durata'].' (ore)',
-            'Validità: '.$row['validità'],
-            'Peso raccomandato: '.$row['peso_raccomandato'].' Kg',
-            'Indice sollevamento: '.$row['indice_sollevamento'],
-            'Esito: '.$row['esito'],
-            'Prezzo: '.$row['prezzo'].'€'
+            'Peso effettivo: '/*.$row['peso'].*/.'xx Kg',
+            'Altezza iniziale: '/*.$row['altezza_iniziale'].*/.'xxx cm',
+            'Distanza verticale: '/*.$row['distanza_verticale'].*/.'xxx cm',
+            'Distanza orizzontale: '/*.$row['distanza_orizzontale'].*/.'xxx cm',
+            'Dislocazione angolare: '/*.$row['distanza_angolare']*/.'xxx °',
+            'Presa: qwerty'/*.$row['presa']*/,
+            'Frequenza './*.$row['frequenza'].*/'x,x (al minuto)',
+            'Tempo: './*.$row['durata'].*/'x (ore)',
+            'Validità: '/*.$row['validità']*/,
+            'Peso raccomandato: './*.$row['peso_raccomandato'].*/'xx,xxx Kg',
+            'Indice sollevamento: xx,xxx'/*.$row['indice_sollevamento']*/,
+            'Esito: xxxxxxxxx'/*.$row['esito']*/,
+            'Prezzo: xxx,xx'/*.$row['prezzo'].*/.'€'
         );
 
 
@@ -90,5 +91,6 @@
             }
         }
         $pdf->Output();
+        return $pdf;
     }
 ?>

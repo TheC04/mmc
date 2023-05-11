@@ -87,7 +87,7 @@
                             <td>'.$row["costo"].'</td>
                             <td><a href="'.$row["documento"].'">PDF</a></td>';
                             if($_SESSION['user']=='admin' || $_SESSION['role']==0){
-                                echo '<td><a href="./../new/new.php">Modifica</a></td></tr>';
+                                echo '<td><button>Modifica</button></td></tr>';
                             }
 		    			}
                     }
