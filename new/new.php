@@ -63,14 +63,14 @@
           }
           require('./../php/getValue.php');
           if(getAI($ai)!=0&&getDV($dv)!=0&&getDO($do)!=0&&getDA($da)!=0&&getPC($pc)!=0&&getFD($fr, $dr)!=0&&getSM($sm)!=0){
-            $iS=$pe/(getAI($ai)*getDV($dv)*getDO($do)*getDA($da)*getPC($pc)*getFD($fr, $dr)*getSM($sm));
-            require('./../php/connection.php');
-            $conn = connect();
-            $sql = "INSERT INTO `valutazione`(`id`, `operatore`, `cliente`, `data`, `Peso effettivo`, `Altezza iniziale`, `Distanza verticale`, `Distanza orizzontale`, `Dislocazione angolare`, `Presa`, `Frequenza`, `Durata`, `Una mano`, `iSoll`, `documento`, `costo`) VALUES ('','".$_SESSION['id']."','".$_POST['rs']."','',".$_POST['pe'].",".$_POST['ai'].",". $_POST['dv'].",". $_POST['do'].",". $_POST['da'].",'". $_POST['pc']."',". $_POST['fr'].",". $_POST['dr'].",'".$sm."','".$iS."','./../valutazioni".$_POST['rs'].".pdf',". $_POST['cs'].")";
-            $result = $conn->query($sql);
-            echo "<h1 style=\"margin-bottom:10px;\">Indice di sollevamento: ".$iS."<br>Peso limite raccomandato: ".getAI($ai)*getDV($dv)*getDO($do)*getDA($da)*getPC($pc)*getFD($fr, $dr)*getSM($sm)."</h1>";
+            $iS=$pe/(getAI($ai)*getDV($dv)*getDO($do)*getDA($da)*getPC($pc)*getFD($fr, $dr)*getSM($sm)*20);
+            //require('./../php/connection.php');
+            //$conn = connect();
+            //$sql = "INSERT INTO `valutazione`(`id`, `operatore`, `cliente`, `data`, `Peso effettivo`, `Altezza iniziale`, `Distanza verticale`, `Distanza orizzontale`, `Dislocazione angolare`, `Presa`, `Frequenza`, `Durata`, `Una mano`, `iSoll`, `documento`, `costo`) VALUES ('','".$_SESSION['id']."','".$_POST['rs']."','',".$_POST['pe'].",".$_POST['ai'].",". $_POST['dv'].",". $_POST['do'].",". $_POST['da'].",'". $_POST['pc']."',". $_POST['fr'].",". $_POST['dr'].",'".$sm."','".$iS."','./../valutazioni".$_POST['rs'].".pdf',". $_POST['cs'].")";
+            //$result = $conn->query($sql);
+            echo '<script>alert("Indice di sollevamento: '.$iS.'\nPeso limite raccomandato: '.getAI($ai)*getDV($dv)*getDO($do)*getDA($da)*getPC($pc)*getFD($fr, $dr)*20*getSM($sm).'")>';
           }else{
-            echo "<h1>C'è un errore nei valori inseriti</h1><button onclick='esci()' style=\"width: 20%;height: 40px;border: 0;border-radius: 5px;background-color: #35af45;color: #fff;font-size: 16px;cursor: pointer;margin-bottom: 10px;\">Indietro</button><script>function esci(){ window.location.href=\"./../new/new.php\";}</script>";
+            echo '<script>alert("C\'è un errore nei valori inseriti")</script>';
           }
           /*require('./../pdfclass/fpdf.php');
           $pdf = new FPDF();
@@ -93,7 +93,9 @@
           $pdf->Cell(60,20,'Indice di sollevamento(IS): '.$_POST['is']);
           $pdf->Output("./../valutazioni", $_POST['rs'].".pdf");*/
         }
+        echo '<script>alert("Ciao")</script>';
       }
+      echo '<script>alert("Ciao")</script>';
     ?>
   </body>
 </html>
