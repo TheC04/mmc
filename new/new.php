@@ -14,7 +14,7 @@
 	<body>
     <h1>Nuovo documento</h1>
     <form method="POST" class="form">
-      <h4 style="margin-top: 2px;">Ragione sociale</h4>
+      <h4 name="rs" style="margin-top: 2px;">Ragione sociale</h4>
       <input name="rs" type="text" required class="input">
       <h4>Costo</h4>
       <input name="cs" type="number" required class="input" step="0.01" min="0.01">
@@ -45,6 +45,9 @@
       <button onclick="esci()">Indietro</button>
     </form>
     <?php
+      if(isset($_GET['id'])){
+        echo '<script>document.getElementsByName("rs").hidden = true;</script>';
+      }
       if(isset($_POST['fr'])){
         $rs=$_POST['rs'];
         $cs=$_POST['cs'];
@@ -65,10 +68,16 @@
         if(getAI($ai)!=0&&getDV($dv)!=0&&getDO($do)!=0&&getDA($da)!=0&&getPC($pc)!=0&&getFD($fr, $dr)!=0&&getSM($sm)!=0){
           $pef=round(getAI($ai)*getDV($dv)*getDO($do)*getDA($da)*getPC($pc)*getFD($fr, $dr)*20*getSM($sm), 2);
           $iS=round($pe/$pef, 2);
-          require('./../php/connection.php');
-          $conn = connect();
-          $sql = "INSERT INTO `valutazione`(`id`, `operatore`, `cliente`, `data`, `Peso effettivo`, `Altezza iniziale`, `Distanza verticale`, `Distanza orizzontale`, `Dislocazione angolare`, `Presa`, `Frequenza`, `Durata`, `Una mano`, `iSoll`, `documento`, `costo`) VALUES ('','".$_SESSION['id']."','".$_POST['rs']."','',".$_POST['pe'].",".$_POST['ai'].",". $_POST['dv'].",". $_POST['do'].",". $_POST['da'].",'". $_POST['pc']."',". $_POST['fr'].",". $_POST['dr'].",'".$sm."','".$iS."','./../valutazioni".$_POST['rs'].".pdf',". $_POST['cs'].")";
-          $result = $conn->query($sql);
+          if(isset($_GET['id'])){
+            require('./../php/connection.php');
+            $conn = connect();
+            $sql="UPDATE `valutazione` SET `data`=".date("d/m/Y", time()).",`Peso effettivo`=".$pe.",`Altezza iniziale`=".$ai.",`Distanza verticale`=".$dv.",`Distanza orizzontale`=".$do.",`Dislocazione angolare`=".$da.",`Presa`=".$pc.",`Frequenza`=".$fr.",`Durata`=".$dr.",`Una mano`=".$sm.",`iSoll`=".$iS.",`costo`=".$cs." WHERE `id`=".$_GET['id'].";";
+          }else{
+            require('./../php/connection.php');
+            $conn = connect();
+            $sql = "INSERT INTO `valutazione`(`id`, `operatore`, `cliente`, `data`, `Peso effettivo`, `Altezza iniziale`, `Distanza verticale`, `Distanza orizzontale`, `Dislocazione angolare`, `Presa`, `Frequenza`, `Durata`, `Una mano`, `iSoll`, `documento`, `costo`) VALUES ('','".$_SESSION['id']."','".$_POST['rs']."','',".$_POST['pe'].",".$_POST['ai'].",". $_POST['dv'].",". $_POST['do'].",". $_POST['da'].",'". $_POST['pc']."',". $_POST['fr'].",". $_POST['dr'].",'".$sm."','".$iS."','./../valutazioni".$_POST['rs'].".pdf',". $_POST['cs'].")";
+            $result = $conn->query($sql);
+          }
           ob_start();
           require('./../pdfclass/fpdf.php');
           $pdf = new FPDF();
