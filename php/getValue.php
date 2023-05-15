@@ -228,7 +228,7 @@ function getFD($dr, $fr){
 }
 function getSM($sM){
     $sm=0;
-    if($sM==true){
+    if($sM=="Vero"){
         $sm=0.6;
     }else{
         $sm=1;
