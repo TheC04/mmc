@@ -44,7 +44,7 @@
                             header('Location: ./homepage/homepage.php');
                         }
                         else {
-                            echo '<div>Credenziali sbagliate</div>';
+                            echo '<script>alert("Credenziali sbagliate")</script>';
                         }
                     }
                 ?>

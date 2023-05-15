@@ -67,7 +67,7 @@
                     if($_SESSION['user']=='admin' || $_SESSION['role']==1){
                         $sql = 'SELECT * FROM valutazione';
                     }else{
-                        $sql = 'SELECT * FROM valutazione WHERE operatore="'.$user.'"';
+                        $sql = 'SELECT * FROM valutazione WHERE operatore="'.$_SESSION['id'].'"';
                     }
                     $response = $connection->query($sql);
                     if ($response->num_rows > 0) {
@@ -86,7 +86,7 @@
                             <td>'.$row["iSoll"].'</td>
                             <td>'.$row["costo"].'</td>
                             <td><a href="'.$row["documento"].'">PDF</a></td>';
-                            if($_SESSION['user']=='admin' || $_SESSION['role']==0){
+                            if($_SESSION['role']==2){
                                 echo '<td><a href="./../new/new.php?id='.$row['id'].'">Modifica</a></td></tr>';
                             }
 		    			}
