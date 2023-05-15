@@ -74,15 +74,15 @@
                         while($row=$response->fetch_assoc()){
 		    				echo '<tr><td>'.$row["cliente"].'</td>
                             <td>'.$row["data"].'</td>
-                            <td>'.$row["Peso effettivo"].'</td>
-                            <td>'.$row["Altezza iniziale"].'</td>
-                            <td>'.$row["Distanza verticale"].'</td>
-                            <td>'.$row["Distanza orizzontale"].'</td>
-                            <td>'.$row["Dislocazione angolare"].'</td>
-                            <td>'.$row["Presa"].'</td>
-                            <td>'.$row["Frequenza"].'</td>
-                            <td>'.$row["Durata"].'</td>
-                            <td>'.$row["Una mano"].'</td>
+                            <td>'.$row["peso effettivo"].'</td>
+                            <td>'.$row["altezza iniziale"].'</td>
+                            <td>'.$row["distanza verticale"].'</td>
+                            <td>'.$row["distanza orizzontale"].'</td>
+                            <td>'.$row["dislocazione angolare"].'</td>
+                            <td>'.$row["presa"].'</td>
+                            <td>'.$row["frequenza"].'</td>
+                            <td>'.$row["durata"].'</td>
+                            <td>'.$row["una mano"].'</td>
                             <td>'.$row["iSoll"].'</td>
                             <td>'.$row["costo"].'</td>
                             <td><a href="'.$row["documento"].'">PDF</a></td>';

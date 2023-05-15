@@ -46,7 +46,12 @@
     </form>
     <?php
       if(isset($_GET['id'])){
-        echo '<script>document.getElementsByName("rs").hidden = true;</script>';
+        require('./../php/connection.php');
+        $conn = connect();
+        $sql = "SELECT * FROM `valutazione` WHERE `id`=".$_GET['id'].";";
+        $result = $conn->query($sql);
+        $row = $result->fetch_array();
+        echo '<script>restore("'.$row['cliente'].'", '.$row['costo'].', '.$row['peso effettivo'].', '.$row['altezza iniziale'].', '.$row['distanza verticale'].', '.$row['distanza orizzontale'].', '.$row['dislocazione angolare'].', "'.$row['presa'].'", '.$row['frequenza'].', '.$row['durata'].', '.$row['una mano'].')</script>';
       }
       if(isset($_POST['fr'])){
         $rs=$_POST['rs'];
@@ -69,13 +74,12 @@
           $pef=round(getAI($ai)*getDV($dv)*getDO($do)*getDA($da)*getPC($pc)*getFD($fr, $dr)*20*getSM($sm), 2);
           $iS=round($pe/$pef, 2);
           if(isset($_GET['id'])){
-            require('./../php/connection.php');
-            $conn = connect();
-            $sql="UPDATE `valutazione` SET `data`=".date("d/m/Y", time()).",`Peso effettivo`=".$pe.",`Altezza iniziale`=".$ai.",`Distanza verticale`=".$dv.",`Distanza orizzontale`=".$do.",`Dislocazione angolare`=".$da.",`Presa`=".$pc.",`Frequenza`=".$fr.",`Durata`=".$dr.",`Una mano`=".$sm.",`iSoll`=".$iS.",`costo`=".$cs." WHERE `id`=".$_GET['id'].";";
+            $sql="UPDATE `valutazione` SET `cliente`='".$rs."',`data`=".date("d/m/Y", time()).",`Peso effettivo`=".$pe.",`Altezza iniziale`=".$ai.",`Distanza verticale`=".$dv.",`Distanza orizzontale`=".$do.",`Dislocazione angolare`=".$da.",`Presa`='".$pc."',`Frequenza`=".$fr.",`Durata`=".$dr.",`Una mano`='".$sm."',`iSoll`=".$iS.",`costo`=".$cs." WHERE `id`=".$_GET['id'].";";
+            $result = $conn->query($sql);
           }else{
             require('./../php/connection.php');
             $conn = connect();
-            $sql = "INSERT INTO `valutazione`(`id`, `operatore`, `cliente`, `data`, `Peso effettivo`, `Altezza iniziale`, `Distanza verticale`, `Distanza orizzontale`, `Dislocazione angolare`, `Presa`, `Frequenza`, `Durata`, `Una mano`, `iSoll`, `documento`, `costo`) VALUES ('','".$_SESSION['id']."','".$_POST['rs']."','',".$_POST['pe'].",".$_POST['ai'].",". $_POST['dv'].",". $_POST['do'].",". $_POST['da'].",'". $_POST['pc']."',". $_POST['fr'].",". $_POST['dr'].",'".$sm."','".$iS."','./../valutazioni".$_POST['rs'].".pdf',". $_POST['cs'].")";
+            $sql = "INSERT INTO `valutazione`(`id`, `operatore`, `cliente`, `data`, `Peso effettivo`, `Altezza iniziale`, `Distanza verticale`, `Distanza orizzontale`, `Dislocazione angolare`, `Presa`, `Frequenza`, `Durata`, `Una mano`, `iSoll`, `documento`, `costo`) VALUES ('','".$_SESSION['id']."','".$_POST['rs']."','',".$_POST['pe'].",".$_POST['ai'].",". $_POST['dv'].",". $_POST['do'].",". $_POST['da'].",'". $_POST['pc']."',". $_POST['fr'].",". $_POST['dr'].",'".$sm."','".$iS."','./../documenti/".$_POST['rs'].".pdf',". $_POST['cs'].")";
             $result = $conn->query($sql);
           }
           ob_start();
@@ -137,6 +141,7 @@
           $pdf->Cell(90, 10, 'Indice sollevamento', 0, 0, 'L');
           $pdf->Cell(90, 10, $iS, 0, 0, 'L');
           $pdf->Ln();
+          $pdf->Output("F", "./../documenti/".$rs.".pdf");
           $pdf->Output();
           ob_end_flush(); 
         }else{
