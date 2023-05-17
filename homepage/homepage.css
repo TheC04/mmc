@@ -10,7 +10,7 @@ table{
 }
 
 th{
-    font-size: 20px;
+    font-size: 17px;
     background-color: #1bdf35c0;
 }
 
@@ -55,4 +55,8 @@ p{
     border: 2px solid #1d7e2a;
     font-size: 18px;
     margin: 2px;
+}
+
+.del:hover{
+	cursor: pointer; 
 }

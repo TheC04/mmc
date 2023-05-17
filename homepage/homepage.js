@@ -53,3 +53,10 @@ function sortTable(n) {
       }
     }
 }
+
+function del(id){
+  let text = "Sei sicuro di voler eliminare questa valutazione?";
+  if (confirm(text) == true) {
+  	location.href="./../php/delete.php?id=".concat(id);
+  }
+}

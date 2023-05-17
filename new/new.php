@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="./new.css">
     <script src="./new.js"></script>
   </head>
-	<body>
+  <body>
     <h1>Nuovo documento</h1>
     <form method="POST" class="form">
       <h4 name="rs" style="margin-top: 2px;">Ragione sociale</h4>
@@ -40,6 +40,8 @@
       <input name="dr" type="number" min=0.1 max=8 required class="input" step="0.1">
       <h4>Una sola mano</h4>
       <input name="sm" type="checkbox" class="cBox">
+      <h4>Due persone</h4>
+      <input name="dp" type="checkbox" class="cBox">
       <br><br>
       <input name="send" type="submit" value="Crea Documento" class="submit" target="_blank">
     </form>
@@ -52,7 +54,7 @@
           $sql = "SELECT * FROM `valutazione` WHERE `id`=".$_GET['id'].";";
           $result = $conn->query($sql);
           $row = $result->fetch_array();
-          echo '<script>restore("'.$row['cliente'].'", '.$row['costo'].', '.$row['peso effettivo'].', '.$row['altezza iniziale'].', '.$row['distanza verticale'].', '.$row['distanza orizzontale'].', '.$row['dislocazione angolare'].', "'.$row['presa'].'", '.$row['frequenza'].', '.$row['durata'].', '.$row['una mano'].')</script>';
+          echo '<script>restore("'.$row['cliente'].'", '.$row['costo'].', '.$row['peso effettivo'].', '.$row['altezza iniziale'].', '.$row['distanza verticale'].', '.$row['distanza orizzontale'].', '.$row['dislocazione angolare'].', "'.$row['presa'].'", '.$row['frequenza'].', '.$row['durata'].', '.$row['una mano'].', '.$row['due persone'].')</script>';
         }
         if(isset($_POST['fr'])){
           $rs=$_POST['rs'];
@@ -70,17 +72,40 @@
           }else{
             $sm="Falso";
           }
+          if(isset($_POST['dp'])){
+            $dp="Vero";
+          }else{
+            $dp="Falso";
+          }
           require('./../php/getValue.php');
-          if(getAI($ai)!=0&&getDV($dv)!=0&&getDO($do)!=0&&getDA($da)!=0&&getPC($pc)!=0&&getFD($fr, $dr)!=0&&getSM($sm)!=0){
-            $pef=round(getAI($ai)*getDV($dv)*getDO($do)*getDA($da)*getPC($pc)*getFD($fr, $dr)*20*getSM($sm), 2);
+          if(getAI($ai)!=0&&getDV($dv)!=0&&getDO($do)!=0&&getDA($da)!=0&&getPC($pc)!=0&&getFD($fr, $dr)!=0&&getSM($sm)!=0&&getDP($dp)!=0){
+            $pef=round(getAI($ai)*getDV($dv)*getDO($do)*getDA($da)*getPC($pc)*getFD($fr, $dr)*20*getSM($sm)*getDP($dp), 2);
             $iS=round($pe/$pef, 2);
+            if($iS<=0.85){
+            	$sit="Situazione accettabile";
+            }else if($iS>0.85 && $iS<1){
+            	$sit="Bisogna aumentare il livello di attenzione";
+            }else{
+            	$sit="Il rischio è alto";
+			}
+            $s=null;
+            $d=null;
+            if($sm=="Vero"){
+            	$s=1;
+            }else{
+            	$s=0;
+            }
+            if($dp=="Vero"){
+            	$d=1;
+            }else{
+            	$d=0;
+            }
             if(isset($_GET['id'])){
-              $sql="UPDATE `valutazione` SET `cliente`='".$rs."',`data`=".date("d/m/Y", time()).",`Peso effettivo`=".$pe.",`Altezza iniziale`=".$ai.",`Distanza verticale`=".$dv.",`Distanza orizzontale`=".$do.",`Dislocazione angolare`=".$da.",`Presa`='".$pc."',`Frequenza`=".$fr.",`Durata`=".$dr.",`Una mano`='".$sm."',`iSoll`=".$iS.",`costo`=".$cs." WHERE `id`=".$_GET['id'].";";
+              $sql="UPDATE `valutazione` SET `cliente`='".$rs."',`data`=now(),`Peso effettivo`=".$pe.",`Altezza iniziale`=".$ai.",`Distanza verticale`=".$dv.",`Distanza orizzontale`=".$do.",`Dislocazione angolare`=".$da.",`Presa`='".$pc."',`Frequenza`=".$fr.",`Durata`=".$dr.",`Una mano`='".$s."',`due persone`=".$d.",`iSoll`=".$iS.",`costo`=".$cs." WHERE `id`=".$_GET['id'].";";
+              echo $sql;
               $result = $conn->query($sql);
             }else{
-              require('./../php/connection.php');
-              $conn = connect();
-              $sql = "INSERT INTO `valutazione`(`id`, `operatore`, `cliente`, `data`, `Peso effettivo`, `Altezza iniziale`, `Distanza verticale`, `Distanza orizzontale`, `Dislocazione angolare`, `Presa`, `Frequenza`, `Durata`, `Una mano`, `iSoll`, `documento`, `costo`) VALUES ('','".$_SESSION['id']."','".$_POST['rs']."',".date("d/m/Y", time()).",".$_POST['pe'].",".$_POST['ai'].",". $_POST['dv'].",". $_POST['do'].",". $_POST['da'].",'". $_POST['pc']."',". $_POST['fr'].",". $_POST['dr'].",'".$sm."','".$iS."','./../documenti/".$_POST['rs'].".pdf',". $_POST['cs'].")";
+              $sql = "INSERT INTO `valutazione`(`id`, `operatore`, `cliente`, `data`, `peso effettivo`, `altezza iniziale`, `distanza verticale`, `distanza orizzontale`, `dislocazione angolare`, `presa`, `frequenza`, `durata`, `una mano`, `due persone`, `iSoll`, `documento`, `costo`) VALUES (null,'".$_SESSION['id']."','".$_POST['rs']."',".$_POST['pe'].",".$_POST['ai'].",". $_POST['dv'].",". $_POST['do'].",". $_POST['da'].",'". $_POST['pc']."',". $_POST['fr'].",". $_POST['dr'].",'".$s."','".$d."','".$iS."','./../documenti/".$_POST['rs'].".pdf',". $_POST['cs'].")";
               $result = $conn->query($sql);
             }
             ob_start();
@@ -136,15 +161,20 @@
             $pdf->Cell(90, 10, 'Una mano', 0, 0, 'L');
             $pdf->Cell(90, 10, $sm, 0, 0, 'L');
             $pdf->Ln();
+            $pdf->Cell(90, 10, 'Due persone', 0, 0, 'L');
+            $pdf->Cell(90, 10, $dp, 0, 0, 'L');
+            $pdf->Ln();
             $pdf->Cell(90, 10, 'Peso raccomandato', 0, 0, 'L');
             $pdf->Cell(90, 10, $pef.' Kg', 0, 0, 'L');
             $pdf->Ln();
             $pdf->Cell(90, 10, 'Indice sollevamento', 0, 0, 'L');
             $pdf->Cell(90, 10, $iS, 0, 0, 'L');
             $pdf->Ln();
+            $pdf->Cell(90, 10, $sit, 0, 0, 'L');
+            $pdf->Ln();
             $pdf->Output("F", "./../documenti/".$rs.".pdf");
-            $pdf->Output();
-            ob_end_flush(); 
+            ob_end_flush();
+            header('Location: ./../homepage/homepage.php');
           }else{
             echo '<script>alert("C\'è un errore nei valori inseriti")</script>';
           }

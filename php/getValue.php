@@ -235,4 +235,13 @@ function getSM($sM){
     }
     return $sm;
 }
+function getDP($dP){
+    $dp=0;
+    if($dP=="Vero"){
+        $dp=0.425;
+    }else{
+        $dp=1;
+    }
+    return $dp;
+}
 ?>

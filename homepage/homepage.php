@@ -48,15 +48,11 @@
                     <th onclick="sortTable(7)">Presa</th>
                     <th onclick="sortTable(8)">Frequenza</th>
                     <th onclick="sortTable(9)">Durata</th>
-                    <th onclick="sortTable(10)">Una sola mano</th>
+                    <th>Una sola mano</th>
+                    <th>Due persone</th>
                     <th onclick="sortTable(11)">Indice di sollevamento</th>
                     <th onclick="sortTable(13)">Costo</th>
                     <th>Documento</th>
-                    <?php
-                        if($_SESSION['user']=='admin' || $_SESSION['role']==0){
-                            echo '<th></th>';
-                        }
-                    ?>
                 </tr>
                 <?php
                     require('./../php/connection.php');
@@ -73,7 +69,7 @@
                     if ($response->num_rows > 0) {
                         while($row=$response->fetch_assoc()){
 		    				echo '<tr><td>'.$row["cliente"].'</td>
-                            <td>'.$row["data"].'</td>
+                            <td>'.date("d/m/Y", strtotime($row["data"])." ").'</td>
                             <td>'.$row["peso effettivo"].'</td>
                             <td>'.$row["altezza iniziale"].'</td>
                             <td>'.$row["distanza verticale"].'</td>
@@ -83,12 +79,17 @@
                             <td>'.$row["frequenza"].'</td>
                             <td>'.$row["durata"].'</td>
                             <td>'.$row["una mano"].'</td>
+                            <td>'.$row["due persone"].'</td>
                             <td>'.$row["iSoll"].'</td>
                             <td>'.$row["costo"].'</td>
                             <td><a href="'.$row["documento"].'">PDF</a></td>';
                             if($_SESSION['role']==2){
-                                echo '<td><a href="./../new/new.php?id='.$row['id'].'">Modifica</a></td></tr>';
+                                echo '<td><a href="./../new/new.php?id='.$row['id'].'">Modifica</a></td>';
                             }
+                            if($_SESSION['user']=="admin"){
+                            	echo '<td><a class="del" onclick="del('.$row['id'].')">Elimina</a></td>';
+                            }
+                            echo '</tr>';
 		    			}
                     }
                 ?>
